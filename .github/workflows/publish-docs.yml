@@ -25,15 +25,29 @@ jobs:
           OUTPUT_DIR: site
           HOSTING_BASE: ${{ github.event.repository.name }}
         run: |
+          echo "=== Debug: Checking docc availability ==="
+          which docc || echo "docc not found in PATH"
+          xcrun --find docc || echo "docc not found via xcrun"
+          
+          echo "=== Debug: Checking input files ==="
+          ls -la "$DOC_ARCHIVE" || echo "DocC archive not found: $DOC_ARCHIVE"
+          
+          echo "=== Cleaning output directory ==="
           rm -rf "$OUTPUT_DIR"
           
+          echo "=== Running docc transform ==="
           "$(xcrun --find docc)" process-archive transform-for-static-hosting \
           	"$DOC_ARCHIVE" \
           	--output-path "$OUTPUT_DIR" \
           	--hosting-base-path "$HOSTING_BASE"
           
+          echo "=== Debug: Checking output ==="
+          ls -la "$OUTPUT_DIR" || echo "Output directory not created"
+          
+          echo "=== Creating .nojekyll file ==="
           touch "$OUTPUT_DIR/.nojekyll"
           
+          echo "=== Creating redirect index.html ==="
           cat > "$OUTPUT_DIR/index.html" <<EOF
           <!DOCTYPE html>
           <html>
@@ -46,6 +60,9 @@ jobs:
           	<body>Redirecting…</body>
           </html>
           EOF
+          
+          echo "=== Final output verification ==="
+          ls -la "$OUTPUT_DIR"
       
       - name: Upload Pages artefact
         uses: actions/upload-pages-artifact@v3
