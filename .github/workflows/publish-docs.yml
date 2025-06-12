@@ -35,17 +35,17 @@ jobs:
           touch "$OUTPUT_DIR/.nojekyll"
           
           cat > "$OUTPUT_DIR/index.html" <<EOF
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Redirecting…</title>
-		<meta http-equiv="refresh" content="0; url=./documentation/${MODULE_NAME}/">
-		<script>"use strict";window.location.replace("./documentation/${MODULE_NAME}/");</script>
-	</head>
-	<body>Redirecting…</body>
-</html>
-EOF
+          <!DOCTYPE html>
+          <html>
+          	<head>
+          		<meta charset="utf-8">
+          		<title>Redirecting…</title>
+          		<meta http-equiv="refresh" content="0; url=./documentation/${MODULE_NAME}/">
+          		<script>"use strict";window.location.replace("./documentation/${MODULE_NAME}/");</script>
+          	</head>
+          	<body>Redirecting…</body>
+          </html>
+          EOF
       
       - name: Upload Pages artefact
         uses: actions/upload-pages-artifact@v3
