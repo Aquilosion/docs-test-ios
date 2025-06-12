@@ -18,7 +18,7 @@ jobs:
       - name: Build static-hosting bundle
         shell: bash
         env:
-        	DOC_ARCHIVE: MapLayr.doccarchive
+          DOC_ARCHIVE: MapLayr.doccarchive
           OUTPUT_DIR: site
           HOSTING_BASE: ${{ github.event.repository.name }}
         run: |
